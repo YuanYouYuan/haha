@@ -1,0 +1,55 @@
+STEP ONE: Configuring RPi by installing required packages and libraries
+
+1.Update first
+sudo apt-get uodate
+sudo apt-get upgrade
+//sudo rpi-update
+
+2.Install developer tools required to build OpenCV
+sudo apt-get install build-essential git cmake pkg-config
+
+3.Install packages to load various 	image formats
+sudo apt-get install libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev
+
+4.Install video I/O packages
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+
+5.Install GTK, which handles OpenCV's GUI operations
+sudo apt-get install libgtk2.0-dev
+
+6.Pull down the OpenCV repository from GitHub
+cd ~
+git clone https://github.com/Itseez/opencv.git
+git clone https://github.com/Itseez/opencv_contrib.git
+
+7.Install the Python 2.7
+sudo apt-get install python2.7-dev
+
+8.Install pip, a Python package manager 
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+
+9.Install NumPy
+pip install numpy
+
+
+
+STEP TWO: Compiling OpenCV 3.0 with Python2.7+ support
+
+1.Build
+cd ~/opencv
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+	-D CMAKE_INSTALL_PREFIX=/usr/local \
+	-D INSTALL_C_EXAMPLES=ON \
+	-D INSTALL_PYTHON_EXAMPLES=ON \
+	-D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+	-D BUILD_EXAMPLES=ON ..
+
+2.Make,4 means 4 cores
+make -j4
+
+3.Make install
+sudo make install
+sudo ldconfig
